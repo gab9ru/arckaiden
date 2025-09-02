@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | ArcKaiden</title>
   <style>
+    /* Custom Font */
+    @font-face {
+      font-family: 'RiiTN';
+      src: url('../fonts/RiiTN_R.otf') format('opentype'); /* Adjust path if necessary */
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -17,6 +25,7 @@
       overflow: hidden;
       position: relative;
       background: black;
+      cursor: default;
     }
 
     /* Background video */
@@ -30,7 +39,6 @@
       z-index: -10;
     }
 
-    /* Overlay for readability */
     #overlay {
       position: fixed;
       inset: 0;
@@ -52,10 +60,7 @@
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .profile-img {
@@ -96,18 +101,41 @@
       text-decoration: none;
       color: white;
       font-weight: bold;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .menu-card:hover {
-      background: rgba(255,255,255,0.2);
-      transform: scale(1.05);
+      background: rgba(0,255,255,0.3);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(0,255,255,0.6), 0 0 30px rgba(106,13,173,0.4);
+    }
+
+    .menu-card::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: scale(0);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+
+    .menu-card:active::after {
+      width: 200%;
+      height: 200%;
+      transform: scale(1);
+      opacity: 0.3;
+      transition: 0s;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background video -->
   <video autoplay muted loop id="bg-video">
     <source src="../videos/dvd.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -120,8 +148,8 @@
     <p>Welcome to my portfolio. I create courses, interactive previews, and much more. Explore and connect!</p>
 
     <div class="menu-grid">
-      <a href="./pages/courses.html" class="menu-card">Courses</a>
-      <a href="./pages/socials.html" class="menu-card">Socials</a>
+      <a href="./courses.html" class="menu-card">Courses</a>
+      <a href="./socials.html" class="menu-card">Socials</a>
     </div>
   </div>
 

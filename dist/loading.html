@@ -20,44 +20,6 @@
     color: white;
   }
 
-  /* Neon text glow */
-  .text-glow { 
-    color: #fff; 
-    text-shadow: 0 0 8px rgb(139, 139, 46), 0 0 16px rgb(19, 31, 31), 0 0 24px rgb(107, 95, 107); 
-    animation: kaidenPulse 1.5s infinite alternate;
-  }
-  .text-arc-glow { 
-    color: #fff; 
-    text-shadow: 0 0 8px #0ff, 0 0 16px #6a0dad, 0 0 24px #0ff; 
-    animation: arcPulse 1.5s infinite alternate;
-  }
-  @keyframes kaidenPulse {
-    0% { text-shadow: 0 0 8px rgb(139, 139, 46), 0 0 16px rgb(19, 31, 31), 0 0 24px rgb(107, 95, 107); }
-    50% { text-shadow: 0 0 12px rgb(82, 79, 65), 0 0 20px rgb(63, 62, 57), 0 0 28px rgb(61, 61, 58); }
-    100% { text-shadow: 0 0 8px rgb(139, 139, 46), 0 0 16px rgb(19, 31, 31), 0 0 24px rgb(107, 95, 107); }
-  }
-  @keyframes arcPulse {
-    0% { text-shadow: 0 0 8px #0ff, 0 0 16px #6a0dad, 0 0 24px #0ff; }
-    50% { text-shadow: 0 0 12px #0ff, 0 0 20px #8a2be2, 0 0 28px #0ff; }
-    100% { text-shadow: 0 0 8px #0ff, 0 0 16px #6a0dad, 0 0 24px #0ff; }
-  }
-
-  /* Circular loader */
-  .circular-loader {
-    width: 100px;
-    height: 100px;
-    border: 8px solid rgba(255,255,255,0.1);
-    border-top-color: #0ff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #6a0dad;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
-  }
-
   /* Smoke overlay (optional) */
   .smoke {
     position: absolute;
@@ -82,12 +44,43 @@
     z-index: 10;
   }
 
+  /* Neon flicker & wiggle effect */
+  .text-glow, .text-arc-glow {
+    display: inline-block;
+    animation: flicker 1.8s infinite, wiggle 2s infinite ease-in-out;
+  }
+
+  .text-glow {
+    color: #fff;
+    text-shadow: 0 0 8px rgb(139,139,46), 0 0 16px rgb(19,31,31), 0 0 24px rgb(107,95,107);
+  }
+
+  .text-arc-glow {
+    color: #fff;
+    text-shadow: 0 0 8px #0ff, 0 0 16px #6a0dad, 0 0 24px #0ff;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    45% { opacity: 0.8; }
+    55% { opacity: 0.95; }
+    70% { opacity: 0.85; }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(1deg); }
+    50% { transform: rotate(-1deg); }
+    75% { transform: rotate(0.5deg); }
+  }
+
   #loader-text {
     margin-top: 20px;
     font-size: 1.5rem;
     color: #ccc;
     animation: pulse 1.5s infinite alternate;
   }
+
   @keyframes pulse {
     0% { color: #0ff; }
     50% { color: #6a0dad; }
@@ -104,7 +97,6 @@
     <h1 class="text-6xl font-extrabold">
       <span class="text-arc-glow">Arc.</span><span class="text-glow">Kaiden</span>
     </h1>
-    <div class="circular-loader"></div>
     <p id="loader-text">Loading…</p>
   </div>
 
@@ -122,7 +114,7 @@
       index = (index + 1) % messages.length;
     }, 1200);
 
-    // Optional redirect after 5 seconds
+    // Redirect after 5 seconds
     setTimeout(() => {
       window.location.href = "home.html";
     }, 5000);
