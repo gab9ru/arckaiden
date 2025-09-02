@@ -10,7 +10,7 @@
             "type": "msedge",
             "request": "launch",
             "name": "Open index.html",
-            "file": "C:\\Users\\Admin\\Desktop\\WEBSITE TESTING\\arckaiden\\src\\index.html"
+            "file": "C:\\Users\\Admin\\Desktop\\WEBSITE TESTING\\arckaiden\\dist\\index.html"
         }
     ]
 }

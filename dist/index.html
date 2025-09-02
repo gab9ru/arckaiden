@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arckaiden - Loading</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="./output.css" rel="stylesheet">
+  <script>
+    // Redirect after 6 seconds
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 6000);
+  </script>
+  <style>
+    /* Glow for text */
+    .text-glow {
+      text-shadow: 0 0 8px rgb(139, 139, 46), 0 0 16px rgb(19, 31, 31), 0 0 24px rgb(107, 95, 107);
+    }
+
+    /* Subtle smoke animation */
+    .smoke {
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background: radial-gradient(circle, rgba(194, 13, 13, 0.1) 0%, transparent 70%);
+      filter: blur(80px);
+      animation: drift 15s infinite alternate;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0px, 0px) }
+      50% { transform: translate(40px, -20px) }
+      100% { transform: translate(-40px, 20px) }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-gradient-to-tr from-gray-700 via-blue-600 to-cyan-500 overflow-hidden relative">
+
+  <!-- Smoke layers -->
+  <div class="smoke"></div>
+  <div class="smoke" style="animation-delay: 5s;"></div>
+  <div class="smoke" style="animation-delay: 10s;"></div>
+
+  <!-- Loader content -->
+  <div class="text-center z-10">
+    <h1 class="text-6xl md:text-7xl font-extrabold text-white mb-4" style="font-family: 'Fredoka One', cursive;">
+      <span>Arc</span><span class="text-glow">Kaiden</span>
+    </h1>
+
+    <p id="loader-text" class="text-lg md:text-2xl text-gray-300/80 mb-8">Loading…</p>
+
+    <!-- Spinner -->
+    <div class="relative w-16 h-16 mx-auto">
+      <div class="absolute inset-0 rounded-full border-4 border-t-transparent border-white/40 animate-spin"></div>
+      <div class="absolute inset-4 rounded-full border-4 border-t-transparent border-white animate-spin"></div>
+    </div>
+  </div>
+
+  <!-- JS for cycling loader text -->
+  <script>
+    const messages = [
+      "Loading…",
+      "Preparing your experience…",
+      "Almost there…",
+      "Getting everything ready…"
+    ];
+    let index = 0;
+    const loaderText = document.getElementById("loader-text");
+    setInterval(() => {
+      loaderText.textContent = messages[index];
+      index = (index + 1) % messages.length;
+    }, 1000);
+  </script>
+
+  <!-- JS for subtle parallax -->
+  <script>
+    const smokeLayers = document.querySelectorAll('.smoke');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      smokeLayers.forEach((layer, i) => {
+        layer.style.transform = `translate(${x*(i+1)}px, ${y*(i+1)}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
