@@ -6,12 +6,6 @@
   <title>Arckaiden - Loading</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link href="./output.css" rel="stylesheet">
-  <script>
-    // Redirect after 6 seconds
-    setTimeout(() => {
-      window.location.href = "home.html";
-    }, 6000);
-  </script>
   <style>
     /* Glow for text */
     .text-glow {
@@ -34,6 +28,16 @@
       0% { transform: translate(0px, 0px) }
       50% { transform: translate(40px, -20px) }
       100% { transform: translate(-40px, 20px) }
+    }
+
+    /* Slide loader up before redirect */
+    @keyframes slideUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .loader-slide-up {
+      animation: slideUp 1s forwards;
     }
   </style>
 </head>
@@ -85,6 +89,23 @@
         layer.style.transform = `translate(${x*(i+1)}px, ${y*(i+1)}px)`;
       });
     });
+  </script>
+
+  <!-- Redirect after 6 seconds with slide-up transition -->
+  <script>
+    setTimeout(() => {
+      const loader = document.querySelector('.text-center');
+      const smokeLayers = document.querySelectorAll('.smoke');
+
+      // Animate loader and smoke out
+      loader.classList.add('loader-slide-up');
+      smokeLayers.forEach(layer => layer.classList.add('loader-slide-up'));
+
+      // Wait 1s for animation to finish, then redirect
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 1000);
+    }, 6000);
   </script>
 </body>
 </html>

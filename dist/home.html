@@ -6,27 +6,54 @@
   <title>Home | Arckaiden</title>
   <link href="./output.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-900 text-white">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-blue-600">Arckaiden</h1>
+  <nav class="bg-black/50 fixed w-full z-50 backdrop-blur-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-400">Arckaiden</h1>
     <ul class="flex gap-6">
-      <li><a href="home.html" class="hover:text-blue-600">Home</a></li>
-      <li><a href="./pages/about.html" class="hover:text-blue-600">About</a></li>
-      <li><a href="./pages/courses.html" class="hover:text-blue-600">Courses</a></li>
-      <li><a href="./pages/promo.html" class="hover:text-blue-600">Promotions</a></li>
+      <li><a href="home.html" class="hover:text-blue-400 transition">Home</a></li>
+      <li><a href="./pages/about.html" class="hover:text-blue-400 transition">About</a></li>
+      <li><a href="./pages/courses.html" class="hover:text-blue-400 transition">Courses</a></li>
+      <li><a href="./pages/promo.html" class="hover:text-blue-400 transition">Promotions</a></li>
     </ul>
   </nav>
 
   <!-- Hero Section -->
-  <section class="text-center py-20">
-    <h2 class="text-5xl font-bold mb-6">Learn with Arckaiden 🎉</h2>
-    <p class="text-lg text-gray-600 mb-8">Explore our courses and grow your skills 🚀</p>
-    <a href="./pages/courses.html"
-       class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-       View Courses
-    </a>
+  <section class="relative h-screen flex flex-col items-center justify-center bg-cover bg-center" style="background-image: url('./images/hero-bg.jpg');">
+    
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <div class="relative z-10 flex flex-col items-center gap-12 px-6">
+
+      <!-- Title -->
+      <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 text-center">
+        Welcome to Arckaiden
+      </h1>
+      <p class="text-lg md:text-2xl text-gray-200 text-center">Discover courses and level up your skills!</p>
+
+      <!-- Choices / Navigation Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+        <a href="./pages/courses.html" class="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
+          <h2 class="text-xl font-bold mb-2">Courses</h2>
+          <p class="text-gray-300 text-sm">Explore all available courses</p>
+        </a>
+        <a href="./pages/about.html" class="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
+          <h2 class="text-xl font-bold mb-2">About</h2>
+          <p class="text-gray-300 text-sm">Learn more about us</p>
+        </a>
+        <a href="./pages/promo.html" class="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
+          <h2 class="text-xl font-bold mb-2">Promotions</h2>
+          <p class="text-gray-300 text-sm">Check out special offers</p>
+        </a>
+        <a href="./pages/contact.html" class="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
+          <h2 class="text-xl font-bold mb-2">Contact</h2>
+          <p class="text-gray-300 text-sm">Get in touch with us</p>
+        </a>
+      </div>
+
+    </div>
   </section>
 
 </body>
