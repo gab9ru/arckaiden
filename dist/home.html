@@ -3,132 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | Arckaiden</title>
-  <link href="./output.css" rel="stylesheet">
+  <title>Home | ArcKaiden</title>
   <style>
-    /* Example live wallpaper background (can be replaced with video or canvas) */
     body {
-      background: linear-gradient(270deg, #1e3a8a, #0ea5e9, #06b6d4, #1e40af);
-      background-size: 800% 800%;
-      animation: gradientMove 20s ease infinite;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      margin: 0;
+      padding: 0;
+      font-family: 'RiiTN', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background: black;
     }
 
-    /* Scroll animation for cards */
-    .fade-in {
+    /* Background video */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -10;
+    }
+
+    /* Overlay for readability */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: -5;
+    }
+
+    .hero {
+      text-align: center;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
       opacity: 0;
       transform: translateY(20px);
-      transition: all 0.8s ease-out;
+      animation: fadeIn 1s forwards;
+      animation-delay: 0.5s;
     }
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .profile-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.5);
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #0ff, #6a0dad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      text-align: center;
+    }
+
+    .menu-grid {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .menu-card {
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .menu-card:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
-<!-- Hero Section -->
- <section class="relative h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-12">
-  <div class="absolute inset-0 bg-black/40"></div>
-  <div class="relative z-10 flex flex-col items-center gap-8 md:gap-12 max-w-6xl w-full text-center">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-      Welcome to Arckaiden
-    </h1>
-    <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-2xl">
-      Discover courses and interactive previews!
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
-      
-      <a href="./pages/courses.html" class="bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
-        <h2 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Courses</h2>
-        <p class="text-gray-300 text-sm sm:text-base">Explore all available courses</p>
-      </a>
+  <!-- Background video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="../videos/dvd.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div id="overlay"></div>
 
-      <a href="./pages/about.html" class="bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
-        <h2 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">About</h2>
-        <p class="text-gray-300 text-sm sm:text-base">Learn more about us</p>
-      </a>
+  <div class="hero">
+    <img src="../images/photo1.jpg" alt="Profile" class="profile-img">
+    <h1>Hello, I'm ArcKaiden</h1>
+    <p>Welcome to my portfolio. I create courses, interactive previews, and much more. Explore and connect!</p>
 
-      <a href="./pages/promo.html" class="bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
-        <h2 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Promotions</h2>
-        <p class="text-gray-300 text-sm sm:text-base">Check out special offers</p>
-      </a>
-
-      <a href="./pages/contact.html" class="bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 hover:bg-white/20 transition flex flex-col items-center text-center">
-        <h2 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Contact</h2>
-        <p class="text-gray-300 text-sm sm:text-base">Get in touch with us</p>
-      </a>
-
+    <div class="menu-grid">
+      <a href="./pages/courses.html" class="menu-card">Courses</a>
+      <a href="./pages/socials.html" class="menu-card">Socials</a>
     </div>
   </div>
- </section>
-
-  <!-- Interactive Previews Section -->
-  <section id="previews" class="py-20 bg-black/20 backdrop-blur-md">
-    <div class="container mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-12">Interactive Previews</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        
-        <!-- Card with video/live wallpaper -->
-        <div class="fade-in bg-white/10 backdrop-blur-md rounded-xl overflow-hidden transition transform hover:scale-105">
-          <div class="relative w-full h-48 mb-4">
-            <!-- Example: Video background -->
-            <video autoplay muted loop class="w-full h-full object-cover">
-              <source src="./videos/sample.mp4" type="video/mp4">
-            </video>
-            <!-- Optional overlay text -->
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <span class="text-gray-200 font-semibold">Video Preview</span>
-            </div>
-          </div>
-          <div class="p-4 flex flex-col items-center text-center">
-            <h3 class="text-xl font-bold mb-2">Preview Title</h3>
-            <p class="text-gray-300 text-sm">Short description about this preview. You can replace the video or background easily.</p>
-          </div>
-        </div>
-
-        <!-- Card with image -->
-        <div class="fade-in bg-white/10 backdrop-blur-md rounded-xl overflow-hidden transition transform hover:scale-105">
-          <div class="relative w-full h-48 mb-4 bg-gray-700 flex items-center justify-center">
-            <span class="text-gray-300">Image Preview</span>
-          </div>
-          <div class="p-4 flex flex-col items-center text-center">
-            <h3 class="text-xl font-bold mb-2">Image Preview</h3>
-            <p class="text-gray-300 text-sm">Replace this with your custom image or GIF.</p>
-          </div>
-        </div>
-
-        <!-- Copy this card for more previews -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Scroll animation JS -->
-  <script>
-    const faders = document.querySelectorAll('.fade-in');
-
-    const appearOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('show');
-        observer.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
-    });
-  </script>
 
 </body>
 </html>
