@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Courses | ArcKaiden</title>
 <style>
+  /* Global */
   body {
     margin: 0;
     font-family: 'RiiTN', sans-serif;
@@ -12,11 +13,11 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    background: black;
+    background: linear-gradient(135deg, #1a0a0f, #2b0e1b); /* subtle hacker vibe */
     cursor: default;
   }
 
-  /* Sidebar with choices */
+  /* Sidebar */
   .sidebar {
     width: 250px;
     display: flex;
@@ -24,6 +25,8 @@
     justify-content: center;
     padding: 2rem 1rem;
     gap: 1rem;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
   }
 
   .choice-btn {
@@ -32,7 +35,7 @@
     font-weight: bold;
     border: none;
     border-radius: 10px;
-    background: rgba(0,255,255,0.15);
+    background: rgba(255,255,255,0.05);
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -47,7 +50,7 @@
     top: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #0ff, #6a0dad);
+    background: linear-gradient(90deg, #ff4d6d, #6a0dad); /* maroon/tech gradient */
     transition: 0.3s;
     z-index: -1;
     border-radius: 10px;
@@ -58,12 +61,12 @@
   }
 
   .choice-btn:hover {
-    color: black;
+    color: white;
     transform: scale(1.05);
-    box-shadow: 0 0 15px #0ff, 0 0 30px #6a0dad;
+    box-shadow: 0 0 10px #ff4d6d, 0 0 20px #6a0dad;
   }
 
-  /* Main content area */
+  /* Main content */
   .main-content {
     flex: 1;
     position: relative;
@@ -82,7 +85,7 @@
     height: 100%;
     object-fit: cover;
     z-index: -10;
-    filter: brightness(0.3);
+    filter: brightness(0.25); /* dimmer background for professional look */
   }
 
   /* Image box */
@@ -92,7 +95,8 @@
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 2rem;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #6a0dad;
+    box-shadow: 0 0 15px #ff4d6d, 0 0 30px #6a0dad;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
   }
 
   .photo-box img {
@@ -100,7 +104,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: all 0.5s ease;
+  }
+
+  .photo-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #ff4d6d, 0 0 50px #6a0dad;
   }
 
   /* Description box */
@@ -108,44 +116,43 @@
     max-width: 500px;
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px); /* Safari fix */
+    -webkit-backdrop-filter: blur(15px);
     padding: 1.5rem 2rem;
     border-radius: 15px;
     text-align: center;
-    color: #0ff;
+    color: white;
     font-weight: bold;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #6a0dad;
+    box-shadow: 0 0 15px #ff4d6d, 0 0 30px #6a0dad;
     transition: all 0.3s ease;
   }
 
-  /* Back button styling */
+  /* Back button */
   #back-btn {
     position: fixed;
     top: 20px;
     left: 20px;
     padding: 0.6rem 1rem;
     font-weight: bold;
-    background: rgba(0,255,255,0.2);
+    background: rgba(255,255,255,0.1);
     color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     z-index: 20;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px #0ff, 0 0 20px #6a0dad;
+    box-shadow: 0 0 10px #ff4d6d, 0 0 20px #6a0dad;
   }
 
   #back-btn:hover {
-    background: rgba(0,255,255,0.6);
-    color: black;
+    background: rgba(255,255,255,0.3);
+    color: white;
     transform: scale(1.05);
-    box-shadow: 0 0 15px #0ff, 0 0 30px #6a0dad;
+    box-shadow: 0 0 15px #ff4d6d, 0 0 30px #6a0dad;
   }
 
+  /* Responsive */
   @media(max-width: 768px){
-    body {
-      flex-direction: column;
-    }
+    body { flex-direction: column; }
     .sidebar {
       flex-direction: row;
       width: 100%;
@@ -154,28 +161,11 @@
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .choice-btn {
-      flex: 1 0 auto;
-      text-align: center;
-    }
-    .main-content {
-      width: 100%;
-      padding: 1rem;
-      align-items: center;
-    }
-    .photo-box {
-      width: 80%;
-      height: 180px;
-      margin-bottom: 1rem;
-    }
-    .description-box {
-      width: 90%;
-    }
-    #back-btn {
-      top: 10px;
-      left: 10px;
-      padding: 0.5rem 0.8rem;
-    }
+    .choice-btn { flex: 1 0 auto; text-align:center; }
+    .main-content { width:100%; padding:1rem; align-items:center; }
+    .photo-box { width:80%; height:180px; margin-bottom:1rem; }
+    .description-box { width:90%; }
+    #back-btn { top:10px; left:10px; padding:0.5rem 0.8rem; }
   }
 </style>
 </head>
@@ -184,16 +174,16 @@
   <!-- Back button -->
   <button id="back-btn">← Back</button>
 
-  <!-- Sidebar with choices -->
+  <!-- Sidebar -->
   <div class="sidebar">
-    <button class="choice-btn" data-desc="Learn the basics of HTML & CSS." data-img="../images/photo1.jpg">Choice 1</button>
-    <button class="choice-btn" data-desc="Interactive JavaScript exercises." data-img="../images/photo2.jpg">Choice 2</button>
-    <button class="choice-btn" data-desc="Explore advanced Tailwind CSS layouts." data-img="../images/photo3.jpg">Choice 3</button>
-    <button class="choice-btn" data-desc="Build a small project step by step." data-img="../images/photo4.jpg">Choice 4</button>
-    <button class="choice-btn" data-desc="Tips for deployment and hosting." data-img="../images/photo5.jpg">Choice 5</button>
+    <button class="choice-btn" data-desc="Learn the basics of HTML & CSS." data-img="../images/photo1.jpg">HTML & CSS</button>
+    <button class="choice-btn" data-desc="Interactive JavaScript exercises." data-img="../images/photo2.jpg">JavaScript</button>
+    <button class="choice-btn" data-desc="Explore advanced Tailwind CSS layouts." data-img="../images/photo3.jpg">Tailwind CSS</button>
+    <button class="choice-btn" data-desc="Build a small project step by step." data-img="../images/photo4.jpg">Projects</button>
+    <button class="choice-btn" data-desc="Tips for deployment and hosting." data-img="../images/photo5.jpg">Deployment</button>
   </div>
 
-  <!-- Main content area -->
+  <!-- Main content -->
   <div class="main-content">
     <video autoplay muted loop id="bg-video">
       <source src="../videos/course-demo.mp4" type="video/mp4">
@@ -223,7 +213,7 @@
 
   const backBtn = document.getElementById('back-btn');
   backBtn.addEventListener('click', () => {
-    window.history.back(); // Goes back to the previous page
+    window.history.back();
   });
 </script>
 
