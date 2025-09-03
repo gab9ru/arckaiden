@@ -13,18 +13,17 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          # Loop through all commits
-          commits=$(jq -c '.commits[]' $GITHUB_EVENT_PATH)
+          # Debug: show event payload
+          echo "Event JSON:"
+          cat "$GITHUB_EVENT_PATH"
 
-          # Start building embeds JSON array
-          embeds="[]"
-
-          for commit in $commits; do
+          # Read commits safely
+          jq -c '.commits[]' "$GITHUB_EVENT_PATH" | while read commit; do
             author=$(echo "$commit" | jq -r '.author.name')
             message=$(echo "$commit" | jq -r '.message')
             url=$(echo "$commit" | jq -r '.url')
 
-            # Append this commit as an embed
+            # Build individual embed
             embed=$(jq -n \
               --arg title "$message" \
               --arg url "$url" \
@@ -39,10 +38,13 @@ jobs:
               }'
             )
 
-            embeds=$(echo "$embeds" | jq ". + [$embed]")
+            # Append embed to file
+            echo "$embed" >> embeds.json
           done
 
-          # Build final payload
+          # Combine all embeds
+          embeds=$(jq -s '.' embeds.json)
+
           payload=$(jq -n --argjson embeds "$embeds" '{embeds: $embeds}')
 
           echo "Payload to send:"
