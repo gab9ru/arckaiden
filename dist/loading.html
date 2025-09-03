@@ -1,146 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacker Intro</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <style>
-    body {
-      background: black;
-      overflow: hidden;
-      font-family: 'Courier New', monospace; /* hacker vibe */
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading | ArcKaiden</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+  body {
+    margin:0;
+    padding:0;
+    background:black;
+    color:white;
+    font-family:'Courier New', monospace;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    flex-direction:column;
+  }
 
-    .circle-bg {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, white 0%, black 70%);
-      opacity: 0.08;
-      mix-blend-mode: screen;
-    }
+  #kaiden {
+    font-size:5rem;
+    font-weight:900;
+    letter-spacing:0.2em;
+    opacity:0;
+  }
 
-    #dedsec {
-      font-size: 5rem;
-      font-weight: 900;
-      color: white;
-      letter-spacing: 0.2em;
-      opacity: 0;
-    }
+  /* Shutter bars */
+  .shutter-bar {
+    position:fixed;
+    left:0;
+    width:100%;
+    height:50%;
+    background:white;
+    z-index:50;
+  }
+  .shutter-top { top:-50%; }
+  .shutter-bottom { bottom:-50%; }
 
-    /* Typing cursor */
-    .typing::after {
-      content: "_";
-      animation: blink 0.8s infinite;
-    }
+  /* Typing effect */
+  #typed::after {
+    content:"_";
+    animation:blink 0.8s infinite;
+  }
+  @keyframes blink { 0%,50% {opacity:1;} 51%,100% {opacity:0;} }
 
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
+  .dots span {
+    display:inline-block;
+    animation:bounce 1s infinite;
+    font-size:2rem;
+    margin:0 2px;
+  }
+  .dots span:nth-child(2){animation-delay:0.2s;}
+  .dots span:nth-child(3){animation-delay:0.4s;}
+  @keyframes bounce { 0%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-8px);} }
 
-    /* Loading dots bounce */
-    .dots span {
-      display: inline-block;
-      animation: bounce 1s infinite;
-    }
-    .dots span:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-    .dots span:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes bounce {
-      0%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-8px); }
-    }
-  </style>
+  #content { display:none; text-align:center; }
+</style>
 </head>
-<body class="flex items-center justify-center h-screen">
+<body>
 
-  <!-- Background Circle -->
-  <div class="circle-bg"></div>
+<div id="kaiden">Kaiden</div>
 
-  <!-- Intro Text -->
-  <div id="intro" class="flex items-center justify-center flex-col">
-    <span id="dedsec">Kaiden</span>
+<div class="shutter-bar shutter-top"></div>
+<div class="shutter-bar shutter-bottom"></div>
+
+<div id="content">
+  <h1 id="typed"></h1>
+  <div class="dots" id="loadingDots">
+    <span>.</span><span>.</span><span>.</span>
   </div>
+</div>
 
-  <!-- Main Content -->
-  <div id="content" class="hidden text-green-400 text-center">
-    <h1 id="typed" class="text-2xl font-bold typing"></h1>
-    <div id="loadingDots" class="dots mt-4 hidden text-2xl">
-      <span>.</span><span>.</span><span>.</span>
-    </div>
-  </div>
+<script>
+let tl = gsap.timeline();
 
-  <script>
-    let tl = gsap.timeline();
+// Fade in Kaiden
+tl.to("#kaiden",{opacity:1,duration:1.5,ease:"power2.out"})
+  .to("#kaiden",{opacity:0,duration:0.5,delay:0.5}) // fade out
 
-    // Background circle pulse
-    gsap.to(".circle-bg", {
-      scale: 1.5,
-      opacity: 0.15,
-      repeat: -1,
-      yoyo: true,
-      duration: 3,
-      ease: "sine.inOut"
-    });
+  // Shutter bars slide in from top/bottom
+  .to(".shutter-top",{y:"50%",duration:1.5,ease:"power4.in"})
+  .to(".shutter-bottom",{y:"-50%",duration:1.5,ease:"power4.in"},"<") // start at same time
 
-    // Text fade/scale in
-    tl.to("#dedsec", {
-      opacity: 1,
-      scale: 0.5,
-      duration: 1.5,
-      ease: "power4.out"
-    });
+  // Hold shutter for a brief moment
+  .to([".shutter-top",".shutter-bottom"],{duration:0.3})
 
-    // Circle expands (flash transition)
-    tl.to(".circle-bg", {
-      scale: 20,
-      opacity: 0.2,
-      duration: 1.5,
-      ease: "power4.in"
-    }, "+=1");
+  // Shutter bars slide out
+  .to(".shutter-top",{y:"-100%",duration:0.6,ease:"power4.out"})
+  .to(".shutter-bottom",{y:"100%",duration:0.6,ease:"power4.out"},"<")
 
-    // Hide intro and show main content
-    tl.to("#intro", {
-      opacity: 0,
-      duration: 0.8,
-      onComplete: () => {
-        document.getElementById("intro").style.display = "none";
-        document.getElementById("content").classList.remove("hidden");
-
-        // Typing effect
-        const text = "Loading Courses";
-        const typedEl = document.getElementById("typed");
-        let i = 0;
-        function type() {
-          if (i < text.length) {
-            typedEl.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, 100); // typing speed
-          } else {
-            // Remove cursor effect after typing finishes
-            typedEl.classList.remove("typing");
-
-            // Show animated dots
-            document.getElementById("loadingDots").classList.remove("hidden");
-
-            // Redirect to home.html after delay
-            setTimeout(() => {
-              window.location.href = "home.html";
-            }, 4000); // 4s delay before redirect
-          }
+  // Show main content
+  .to("#content",{display:"block",duration:0,onComplete:()=>{
+      // Typing effect
+      const text="Loading Courses";
+      const typedEl=document.getElementById("typed");
+      let i=0;
+      function type(){ 
+        if(i<text.length){ 
+          typedEl.textContent+=text.charAt(i); 
+          i++; 
+          setTimeout(type,100);
+        } else {
+          document.getElementById("loadingDots").style.display="inline-block";
+          setTimeout(()=>{window.location.href="home.html"},4000);
         }
-        type();
       }
-    });
-  </script>
+      type();
+  }});
+</script>
+
 </body>
 </html>

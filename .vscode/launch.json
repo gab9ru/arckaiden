@@ -2,10 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Open index.html in Edge (Local File)",
+      "name": "Open index.html in Edge",
       "type": "pwa-msedge",
       "request": "launch",
-      "url": "file:///C:\\Users\\Christian Paul\\OneDrive\\Paolo Feliciano\\OneDrive\\Desktop\\Repos\\arckaiden/index.html"
+      "file": "${workspaceFolder}/index.html",
+      "webRoot": "${workspaceFolder}"
     }
   ]
-} 
+}
