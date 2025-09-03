@@ -108,6 +108,7 @@
     max-width: 500px;
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Safari fix */
     padding: 1.5rem 2rem;
     border-radius: 15px;
     text-align: center;
@@ -115,6 +116,30 @@
     font-weight: bold;
     box-shadow: 0 0 20px #0ff, 0 0 40px #6a0dad;
     transition: all 0.3s ease;
+  }
+
+  /* Back button styling */
+  #back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    background: rgba(0,255,255,0.2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #6a0dad;
+  }
+
+  #back-btn:hover {
+    background: rgba(0,255,255,0.6);
+    color: black;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #0ff, 0 0 30px #6a0dad;
   }
 
   @media(max-width: 768px){
@@ -146,10 +171,18 @@
     .description-box {
       width: 90%;
     }
+    #back-btn {
+      top: 10px;
+      left: 10px;
+      padding: 0.5rem 0.8rem;
+    }
   }
 </style>
 </head>
 <body>
+
+  <!-- Back button -->
+  <button id="back-btn">← Back</button>
 
   <!-- Sidebar with choices -->
   <div class="sidebar">
@@ -187,44 +220,12 @@
       choicePhoto.src = btn.getAttribute('data-img');
     });
   });
-</script>
 
-<!-- Add this inside <body>, above all content -->
-<button id="back-btn">← Back</button>
-
-<style>
-  /* Back button styling */
-  #back-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 0.6rem 1rem;
-    font-weight: bold;
-    background: rgba(0,255,255,0.2);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    z-index: 20;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px #0ff, 0 0 20px #6a0dad;
-  }
-
-  #back-btn:hover {
-    background: rgba(0,255,255,0.6);
-    color: black;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #0ff, 0 0 30px #6a0dad;
-  }
-</style>
-
-<script>
   const backBtn = document.getElementById('back-btn');
   backBtn.addEventListener('click', () => {
     window.history.back(); // Goes back to the previous page
   });
 </script>
-
 
 </body>
 </html>
