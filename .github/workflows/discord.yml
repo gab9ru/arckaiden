@@ -1,25 +1,49 @@
-name: Discord Webhook
+name: Discord Webhook Embeds
 
 on:
   push:
     branches:
-      - main   # change if your repo’s default branch is different
+      - main   # change if your default branch is different
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send commit log to Discord
+      - name: Send commit logs as Discord embeds
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          # Build commit log
-          commits=$(jq -r '.commits[] | "- **\(.author.name)**: \(.message) (<\(.url)>)"' $GITHUB_EVENT_PATH)
+          # Loop through all commits
+          commits=$(jq -c '.commits[]' $GITHUB_EVENT_PATH)
 
-          # Prepare payload
-          payload=$(jq -n \
-            --arg content "📢 **New push to $GITHUB_REPOSITORY** by *${{ github.actor }}*\n\n$commits" \
-            '{content: $content}')
+          # Start building embeds JSON array
+          embeds="[]"
+
+          for commit in $commits; do
+            author=$(echo "$commit" | jq -r '.author.name')
+            message=$(echo "$commit" | jq -r '.message')
+            url=$(echo "$commit" | jq -r '.url')
+
+            # Append this commit as an embed
+            embed=$(jq -n \
+              --arg title "$message" \
+              --arg url "$url" \
+              --arg author "$author" \
+              --arg footer "Don't forget to git fetch origin" \
+              '{
+                title: $title,
+                url: $url,
+                description: $author,
+                color: 3066993,
+                footer: { text: $footer }
+              }'
+            )
+
+            embeds=$(echo "$embeds" | jq ". + [$embed]")
+          done
+
+          # Build final payload
+          payload=$(jq -n --argjson embeds "$embeds" '{embeds: $embeds}')
 
           echo "Payload to send:"
           echo "$payload"
