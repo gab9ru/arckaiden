@@ -16,10 +16,11 @@ jobs:
           # Build commit log
           commits=$(jq -r '.commits[] | "- **\(.author.name)**: \(.message) (<\(.url)>)"' $GITHUB_EVENT_PATH)
 
+          # Add reminder at the bottom
+          message="📢 **New push to $GITHUB_REPOSITORY** by *${{ github.actor }}*\n\n$commits\n\n⚠️ Don't forget to \`git fetch origin\`"
+
           # Prepare payload
-          payload=$(jq -n \
-            --arg content "📢 **New push to $GITHUB_REPOSITORY** by *${{ github.actor }}*\n\n$commits" \
-            '{content: $content}')
+          payload=$(jq -n --arg content "$message" '{content: $content}')
 
           echo "Payload to send:"
           echo "$payload"
