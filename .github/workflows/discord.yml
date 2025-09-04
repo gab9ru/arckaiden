@@ -13,44 +13,41 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          # Debug: show event payload
           echo "Event JSON:"
           cat "$GITHUB_EVENT_PATH"
 
-          # Read commits safely
           jq -c '.commits[]' "$GITHUB_EVENT_PATH" | while read commit; do
             author=$(echo "$commit" | jq -r '.author.name')
-            message=$(echo "$commit" | jq -r '.message')
+            full_message=$(echo "$commit" | jq -r '.message')
             url=$(echo "$commit" | jq -r '.url')
 
-            # Build individual embed
+            subject=$(echo "$full_message" | head -n1)
+            body=$(echo "$full_message" | tail -n +2)
+
             embed=$(jq -n \
-              --arg title "$message" \
+              --arg title "$subject" \
               --arg url "$url" \
               --arg author "$author" \
+              --arg body "$body" \
               --arg footer "Don't forget to git fetch origin" \
               '{
                 title: $title,
                 url: $url,
-                description: $author,
+                description: ($body | if . != "" then . else $author end),
                 color: 3066993,
                 footer: { text: $footer }
               }'
             )
 
-            # Append embed to file
             echo "$embed" >> embeds.json
           done
 
-          # Combine all embeds
           embeds=$(jq -s '.' embeds.json)
-
           payload=$(jq -n --argjson embeds "$embeds" '{embeds: $embeds}')
 
           echo "Payload to send:"
           echo "$payload"
 
-          # Send to Discord
           curl -H "Content-Type: application/json" \
                -X POST \
                -d "$payload" \
